@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Counter App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #f0f8ff, #e6f7ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        div {
+            text-align: center;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+
+        #counter {
+            font-size: 3rem;
+            font-weight: bold;
+            margin: 10px 0;
+            transition: color 0.3s ease-in-out;
+        }
+
+        #para {
+            font-size: 1.2rem;
+            margin-top: 15px;
+            font-style: italic;
+            transition: color 0.3s ease-in-out;
+        }
+
+        /* Buttons styling */
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 8px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+        }
+
+        button:hover {
+            background: #0056b3;
+            transform: scale(1.05);
+        }
+
+        button:active {
+            transform: scale(0.95);
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <p id="counter"></p>
+        <button type="button" id="increase">Increase</button>
+        <button type="button" id="decrease">Decrease</button>
+        <button type="button" id="reset">Reset</button>
+        <p id="para"></p>
+
+    </div>
+
+    <script>
+        let counter = document.getElementById("counter");
+        let inc = document.getElementById("increase");
+        let dec = document.getElementById("decrease");
+        let res = document.getElementById("reset");
+        let para = document.getElementById("para");
+
+        let count = 0;
+        counter.textContent = count;
+
+        let increase = () => {
+            count++;
+            counter.textContent = count;
+            updateColor();
+            para.textContent = "Count Increased";
+        };
+
+        let decrease = () => {
+            count--;
+            counter.textContent = count;
+            updateColor();
+            para.textContent = "Count decreased";            
+        };
+
+        let reset = () => {
+            count = 0;
+            counter.textContent = count;
+            updateColor();
+            para.textContent = "Reset Done";
+        };
+
+        let updateColor = () => {
+            if(count < 0) {
+                counter.style.color = "red";
+                para.style.color = "red";
+            }
+            else if(count > 0){
+                counter.style.color = "green"; 
+                para.style.color = "green";   
+            } 
+            else{
+                counter.style.color = "black";
+                para.style.color = "black";
+            }
+        };
+
+        updateColor();
+
+        inc.addEventListener("click",increase);
+        dec.addEventListener("click",decrease);
+        res.addEventListener("click",reset);
+    </script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ToDo List</title>
+  <style>
+    /* Reset thoda clean look ke liye */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .todo-box {
+      background: #fff;
+      padding: 2rem;
+      border-radius: 20px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      width: 350px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 1rem;
+    }
+
+    #input {
+      width: 70%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    #input:focus {
+      border-color: #4facfe;
+      box-shadow: 0 0 5px rgba(79, 172, 254, 0.5);
+    }
+
+    #button {
+      padding: 10px 15px;
+      margin-left: 8px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #43e97b, #38f9d7);
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    #button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #38f9d7, #43e97b);
+    }
+
+    #container {
+      margin-top: 1.5rem;
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background: #f7f9fc;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.05);
+      transition: 0.3s;
+    }
+
+    li:hover {
+      transform: translateX(5px);
+      background: #eef4ff;
+    }
+
+    li button {
+      padding: 5px 10px;
+      border: none;
+      border-radius: 6px;
+      background: #ff6b6b;
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: 0.3s;
+    }
+
+    li button:hover {
+      background: #ff4757;
+    }
+  </style>
+</head>
+<body>
+  <div class="todo-box">
+    <h1>ToDo List</h1>
+    <input type="text" placeholder="Enter a task" id="input"/>
+    <button type="submit" id="button">Add</button>
+    <div id="container"></div>
+  </div>
+
+  <script>
+    let input = document.getElementById("input");
+    let cont = document.getElementById("container");
+
+    let toDoValue = JSON.parse(localStorage.getItem("toDo")) || [];
+    //console.log(toDoValue);
+    let addToDoListDunamics = (curElem) => {
+
+        let value = curElem.trim();
+        if (value === "") return;
+            let li = document.createElement("li");
+            li.textContent = value;
+
+            let editBtn = document.createElement("button");
+            editBtn.textContent = "Edit";
+            editBtn.addEventListener("click", () => {
+            li.firstChild.textContent = prompt("Enter the new value ",li.firstChild.textContent);
+            });
+
+            let delBtn = document.createElement("button");
+            delBtn.textContent = "Delete";
+            delBtn.addEventListener("click", () => {
+                li.remove();
+            });
+
+            li.appendChild(delBtn);
+            li.appendChild(editBtn);
+            cont.appendChild(li);
+            input.value = "";
+
+            toDoValue.push(value);
+            let uniqueToDoValue = [...new Set(toDoValue)];
+            localStorage.setItem("toDo",JSON.stringify(uniqueToDoValue));
+            //console.log(uniqueToDoValue);
+      
+    };
+
+    let sumbitValue = () => {
+    //   let value = input.value.trim();
+    //   if (value === "") return;
+
+    //   let li = document.createElement("li");
+    //        li.textContent = value;
+
+    //   let editBtn = document.createElement("button");
+    //   editBtn.textContent = "Edit";
+    //   editBtn.addEventListener("click", () => {
+    //   li.firstChild.textContent = prompt("Enter the new value ",li.firstChild.textContent);
+    //   });
+
+    //   let delBtn = document.createElement("button");
+    //   delBtn.textContent = "Delete";
+    //   delBtn.addEventListener("click", () => {
+    //     li.remove();
+    //   });
+
+    //   li.appendChild(delBtn);
+    //   li.appendChild(editBtn);
+    //   cont.appendChild(li);
+    //   input.value = "";
+
+    //   toDoValue.push(value);
+    //   let uniqueToDoValue = [...new Set(toDoValue)];
+    //   localStorage.setItem("toDo",JSON.stringify(uniqueToDoValue));
+    //   console.log(uniqueToDoValue);
+        if(toDoValue.includes(element)){
+            addToDoListDunamics(input.value);
+        }
+      
+    };
+    
+      let showToDoList = () => {
+        console.log(toDoValue);
+
+        toDoValue.forEach(element => { 
+                addToDoListDunamics(element);
+        });
+      };
+      showToDoList();
+    document.getElementById("button").addEventListener("click", sumbitValue);
+  </script>
+</body>
+</html>

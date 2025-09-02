@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Background Gradient Generator.</title>
+    <style>
+body {
+    background: linear-gradient(to right, black, blue);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: center;    /* Center horizontally */
+    gap: 12px;              /* Space between elements */
+}
+
+button {
+    border-radius: 10px;
+    border: none;
+    background-color: burlywood;
+    color: white;
+    padding: 10px 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Border shadow */
+    transition: all 0.2s ease-in-out;
+}
+
+button:hover {
+    transform: scale(1.05); /* Small hover effect */
+}
+
+p {
+    color: white; /* White text */
+    font-size: 16px;
+    margin-top: 5px;
+    text-shadow: 1px 1px 3px black; /* Soft shadow for readability */
+}
+
+
+    </style>
+</head>
+<body>
+   <body>
+    <div class="container">
+        <button id="button1">button 1</button>
+        <button id="button2">button 2</button>
+        <p id="paragraph">linear-gradient(to right,#ffffff,#000000)</p>
+    </div>
+</body>
+    <script>
+        let btn1 = document.getElementById("button1");//button1 ka reference liya hai
+        let btn2 = document.getElementById("button2");//button 2 -----
+        let para = document.getElementById("paragraph");
+        let hexCode = "0123456789abcdef"; //hexcode ki value hai jo use hoga ek six digit ka hexcode generate karne ke liye.
+        let color1 = "#ffffff";//default value of color1
+        let color2 = "#000000";//default value of color2
+
+        //6 digits ka hexcode generate karne ke liye function.
+        let buttonClick = () => { 
+            let colorCode1 =  "#";
+            //let colorCode2 = "#";
+            for(let i = 0; i < 6; i++){
+                colorCode1 += hexCode[Math.floor(Math.random() * 16)];//colorcode1 ki value ko store karne ke liye variale.
+                //colorCode2 += hexCode[Math.floor(Math.random() * 16)];//colorcode2 ki ------------------------------------.
+            }
+            console.log(`colorCode 1 ${colorCode1}`);
+            //console.log(`color code 2 ${colorCode2}`);
+            return colorCode1;
+           // return [colorCode1,colorCode2];//colorcode1,2 ki value ko return karta hai
+        };
+//not in use-------------------------------------------------------------------------------------
+        //color change karta hai dono sides ka no matter konsa button click hota hai.
+        let changeColor = (event) => { 
+            console.log("color value before changing : "+color1);
+            [color1,color2] = buttonClick();//store karta hai values colorcode1,2 ki color1 or color2 variable mein.
+            console.log(`color vlaue after chaning ${color1}`);
+            document.body.style.background = `linear-gradient(to right,${color1},${color2})`;//change karta hai background color,background property ke sath
+            //change karo button1,2 ki values to hexcode.
+            btn1.innerText = color1;
+            btn2.innerText = color2;
+        };
+
+        let changeColor1 = () => { 
+            console.log("color value before changing : "+color1);
+            color1 = buttonClick();//store karta hai values colorcode1,2 ki color1 or color2 variable mein.
+            console.log(`color vlaue after chaning ${color1}`);
+            document.body.style.background = `linear-gradient(to right,${color1},${color2})`;//change karta hai background color,background property ke sath
+            //change karo button1,2 ki values to hexcode.
+            btn1.innerText = color1;
+            //btn2.innerText = color2;
+        };
+//--------------------------------------------------------------------------
+
+        let changeColor3 = (side) => { 
+            if(side === "left"){
+                color1 = buttonClick();
+                btn1.innerText = color1;
+            }
+            else{
+                color2 = buttonClick();
+                btn2.innerText = color2;
+            }
+             document.body.style.background = `linear-gradient(to right,${color1},${color2})`;
+             para.textContent = `linear-gradient(to right,${color1},${color2})`;
+        };
+
+        btn1.addEventListener("click",() => changeColor3("left")); //button1 click karne pe changecolor function call hota hai.
+        btn2.addEventListener("click",() => changeColor3("right"));
+
+    </script>
+</body>
+</html>

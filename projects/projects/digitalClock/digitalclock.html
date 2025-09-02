@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Clock</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Page background */
+        body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #a8edea, #fed6e3);
+        font-family: "Poppins", sans-serif;
+        }
+
+        /* Clock container glassmorphism style */
+        #container {
+        font-size: 55px;
+        font-weight: 600;
+        color: #333;
+        text-align: center;
+        padding: 25px 50px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.3);
+        backdrop-filter: blur(12px);
+        border: 2px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        letter-spacing: 2px;
+        }
+
+        /* AM/PM style */
+        #ampm {
+        font-size: 25px;
+        margin-left: 8px;
+        color: #ff4081;
+        font-weight: bold;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <span id="hour"></span>
+        <span id="min"></span>
+        <span id="sec"></span>
+        <span id="ampm"> </span>
+</div>
+    <script>
+        let hour =  document.getElementById("hour");
+        let min = document.getElementById("min");
+        let sec = document.getElementById("sec");
+        let amPm = document.getElementById("ampm");
+
+        setInterval(() => {
+
+        const date = new Date();
+
+        let currHour = date.getHours();
+        let curMin = date.getMinutes();
+        let curSec = date.getSeconds();
+        
+        //12 hour format mein change karne ka standard formula
+        let period = currHour < 12 ? "AM" : "PM";//pehle currHour value se decide karga ki am hoga ya pm kyunki ek bar 12 hour format mein change ho gaya toh uski value 0- 11 hi rahegi jiske karan kabhi bhi PM nahi banega 
+        currHour = currHour % 12;
+        currHour = currHour ? `${currHour}` : 12;
+        curMin = curMin < 10 ? `0${curMin}` : curMin;
+        curSec = curSec < 10 ? `0${curSec}` : curSec;
+
+        hour.innerText =`${currHour} : `;
+        min.innerText = `${curMin} : `;
+        sec.textContent = curSec;
+        amPm.textContent = period
+        ;   
+    },1000);
+     
+    </script>
+</body>
+</html>
